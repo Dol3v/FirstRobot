@@ -29,124 +29,123 @@ import frc.robot.subsystems.Shooter;
  */
 public class Robot extends TimedRobot {
 
-  private DriveTrain train;
-  private WPI_VictorSPX driveTrainDownLeft;
-  private WPI_VictorSPX driveTrainDownRight;
-  private WPI_TalonSRX driveTrainUpLeft;
-  private WPI_TalonSRX driveTrainUpRight;
-  private VictorSP gripMotor;
-  private DigitalInput gripLimit;
-  private MoveTrain moveCmd;
+    /**
+     * This function is run when the robot is first started up and should be used for any
+     * initialization code.
+     */
+    @Override
+    public void robotInit() {
+        DriveTrain train;
+        WPI_VictorSPX driveTrainDownLeft;
+        WPI_VictorSPX driveTrainDownRight;
+        WPI_TalonSRX driveTrainUpLeft;
+        WPI_TalonSRX driveTrainUpRight;
+        VictorSP gripMotor;
+        DigitalInput gripLimit;
+        MoveTrain moveCmd;
 
-  private Gripper gripper;
-  private Grip grip;
-  private UnGrip ungrip;
+        Gripper gripper;
+        Grip grip;
+        UnGrip ungrip;
 
-  private Encoder encoderShooter;
-  private WPI_TalonSRX motorShooter;
-  private DigitalInput limitShooter;
-  private Shooter shooter;
-  /**
-   * This function is run when the robot is first started up and should be used for any
-   * initialization code.
-   */
-  @Override
-  public void robotInit() {
-    //initializing robot
-    driveTrainDownLeft = new WPI_VictorSPX(RobotMap.CAN.driveTrainMotorDownLeft);
-    driveTrainDownRight = new WPI_VictorSPX(RobotMap.CAN.driveTrainMotorDownRight);
-    driveTrainUpLeft = new WPI_TalonSRX(RobotMap.CAN.driveTrainMotorUpLeft);
-    driveTrainUpRight = new WPI_TalonSRX(RobotMap.CAN.driveTrainMotorUpRight);
+        Encoder encoderShooter;
+        WPI_TalonSRX motorShooter;
+        DigitalInput limitShooter;
+        Shooter shooter;
+        //initializing robot
+        driveTrainDownLeft = new WPI_VictorSPX(RobotMap.CAN.DRIVE_TRAIN_MOTOR_DOWN_LEFT);
+        driveTrainDownRight = new WPI_VictorSPX(RobotMap.CAN.DRIVE_TRAIN_MOTOR_DOWN_RIGHT);
+        driveTrainUpLeft = new WPI_TalonSRX(RobotMap.CAN.DRIVE_TRAIN_MOTOR_UP_LEFT);
+        driveTrainUpRight = new WPI_TalonSRX(RobotMap.CAN.DRIVE_TRAIN_MOTOR_UP_RIGHT);
 
-    train = new DriveTrain(driveTrainUpLeft, driveTrainDownLeft, driveTrainUpRight, driveTrainDownRight);
+        train = new DriveTrain(driveTrainUpLeft, driveTrainDownLeft, driveTrainUpRight, driveTrainDownRight);
 
+        gripMotor = new VictorSP(RobotMap.PWM.GRIP_MOTOR);
+        gripLimit = new DigitalInput(RobotMap.DIO.GRIP_LIMIT);
+        gripper = new Gripper(gripMotor, gripLimit);
 
-    gripMotor = new VictorSP(RobotMap.PWM.gripMotor);
-    gripLimit = new DigitalInput(RobotMap.DIO.gripLimit);
-    gripper = new Gripper(gripMotor, gripLimit);
+        grip = new Grip(gripper);
+        ungrip = new UnGrip(gripper);
 
-    grip = new Grip(gripper);
-    ungrip = new UnGrip(gripper);
+        encoderShooter = new Encoder(RobotMap.DIO.ENCODER_SHOOTER_POS, RobotMap.DIO.ENCODER_SHOOTER_NEG);
+        motorShooter = new WPI_TalonSRX(RobotMap.CAN.SHOOTER_MOTOR);
+        limitShooter = new DigitalInput(RobotMap.DIO.SHOOTER_LIMIT);
+        shooter = new Shooter(motorShooter, limitShooter, encoderShooter);
 
-    encoderShooter = new Encoder(RobotMap.DIO.encoderShooterPos, RobotMap.DIO.encoderShooterNeg);
-    motorShooter = new WPI_TalonSRX(RobotMap.CAN.shooterMotor);
-    limitShooter = new DigitalInput(RobotMap.DIO.shooterLimit);
-    shooter = new Shooter(motorShooter, limitShooter, encoderShooter);
+        OI oi = new OI(gripper);
+        moveCmd = new MoveTrain(train, () -> oi.getLeftY(), () -> oi.getRightY());
 
-    OI oi = new OI(gripper);
-    moveCmd = new MoveTrain(train, () -> oi.getLeftY(), () -> oi.getRightY());
+        train.setDefaultCommand(moveCmd);
 
-    train.setDefaultCommand(moveCmd);
+    }
 
-  }
+    /**
+     * This function is called every robot packet, no matter the mode. Use this for items like
+     * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
+     *
+     * <p>This runs after the mode specific periodic functions, but before
+     * LiveWindow and SmartDashboard integrated updating.</p>
+     */
+    @Override
+    public void robotPeriodic() {
+        // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
+        // commands, running already-scheduled commands, removing finished or interrupted commands,
+        // and running subsystem periodic() methods. This must be called from the robot's periodic
+        // block in order for anything in the Command-based framework to work.
+        CommandScheduler.getInstance().run();
+    }
 
-  /**
-   * This function is called every robot packet, no matter the mode. Use this for items like
-   * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
-   *
-   * <p>This runs after the mode specific periodic functions, but before
-   * LiveWindow and SmartDashboard integrated updating.</p>
-   */
-  @Override
-  public void robotPeriodic() {
-    // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
-    // commands, running already-scheduled commands, removing finished or interrupted commands,
-    // and running subsystem periodic() methods. This must be called from the robot's periodic
-    // block in order for anything in the Command-based framework to work.
-    CommandScheduler.getInstance().run();
-  }
+    /**
+     * This function is called once each time the robot enters Disabled mode.
+     */
+    @Override
+    public void disabledInit() {
 
-  /**
-   * This function is called once each time the robot enters Disabled mode.
-   */
-  @Override
-  public void disabledInit() {
-    this.moveCmd.end(true);
-  }
+    }
 
-  @Override
-  public void disabledPeriodic() {
-  }
+    @Override
+    public void disabledPeriodic() {
+    }
 
 
-  @Override
-  public void autonomousInit() {
+    @Override
+    public void autonomousInit() {
 
-  }
+    }
 
-  /**
-   * This function is called periodically during autonomous.
-   */
-  @Override
-  public void autonomousPeriodic() {
-  }
+    /**
+     * This function is called periodically during autonomous.
+     */
+    @Override
+    public void autonomousPeriodic() {
+    }
 
-  @Override
-  public void teleopInit() {
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
+    @Override
+    public void teleopInit() {
+        // This makes sure that the autonomous stops running when
+        // teleop starts running. If you want the autonomous to
+        // continue until interrupted by another command, remove
+        // this line or comment it out.
 
-  }
+    }
 
-  /**
-   * This function is called periodically during operator control.
-   */
-  @Override
-  public void teleopPeriodic() {
-  }
+    /**
+     * This function is called periodically during operator control.
+     */
+    @Override
+    public void teleopPeriodic() {
+    }
 
-  @Override
-  public void testInit() {
-    // Cancels all running commands at the start of test mode.
-    CommandScheduler.getInstance().cancelAll();
-  }
+    @Override
+    public void testInit() {
+        // Cancels all running commands at the start of test mode.
+        CommandScheduler.getInstance().cancelAll();
+    }
 
-  /**
-   * This function is called periodically during test mode.
-   */
-  @Override
-  public void testPeriodic() {
-  }
+    /**
+     * This function is called periodically during test mode.
+     */
+    @Override
+    public void testPeriodic() {
+    }
 }

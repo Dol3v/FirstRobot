@@ -4,22 +4,22 @@ public class RobotMap {
     //robot map
 
     public interface CAN {
-        int driveTrainMotorUpLeft = 0;
-        int driveTrainMotorDownLeft = 1;
-        int driveTrainMotorUpRight = 2;
-        int driveTrainMotorDownRight = 3;
-        int shooterMotor = 4;
+        int DRIVE_TRAIN_MOTOR_UP_LEFT = 0;
+        int DRIVE_TRAIN_MOTOR_DOWN_LEFT = 1;
+        int DRIVE_TRAIN_MOTOR_UP_RIGHT = 2;
+        int DRIVE_TRAIN_MOTOR_DOWN_RIGHT = 3;
+        int SHOOTER_MOTOR = 4;
 
     }
 
     public interface PWM {
-        int gripMotor = 0;
+        int GRIP_MOTOR = 0;
     }
 
     public interface DIO {
-        int gripLimit = 0;
-        int encoderShooterPos = 1;
-        int encoderShooterNeg = 2;
-        int shooterLimit = 3;
+        int GRIP_LIMIT = 0;
+        int ENCODER_SHOOTER_POS = 1;
+        int ENCODER_SHOOTER_NEG = 2;
+        int SHOOTER_LIMIT = 3;
     }
 }

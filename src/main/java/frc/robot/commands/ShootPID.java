@@ -44,6 +44,7 @@ public class ShootPID extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-
+        shooter.stop();
+        pidController.close();
     }
 }

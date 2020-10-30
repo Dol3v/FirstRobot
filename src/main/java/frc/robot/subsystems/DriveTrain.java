@@ -12,15 +12,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class DriveTrain extends SubsystemBase {
 
     private WPI_TalonSRX leftUp;
-    private WPI_VictorSPX leftDown;
     private WPI_TalonSRX rightUp;
-    private WPI_VictorSPX rightDown;
 
     public DriveTrain(WPI_TalonSRX leftUp, WPI_VictorSPX leftDown, WPI_TalonSRX rightUp, WPI_VictorSPX rightDown) {
         this.leftUp = leftUp;
-        this.leftDown = leftDown;
         this.rightUp = rightUp;
-        this.rightDown = rightDown;
 
         rightUp.setInverted(true);
         rightDown.follow(rightUp);

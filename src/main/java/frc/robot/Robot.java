@@ -52,8 +52,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    // Instantiate our RobotContainer. This will perform all our button bindings, and put our
-    // autonomous chooser on the dashboard.
     driveTrainDownLeft = new WPI_VictorSPX(RobotMap.CAN.driveTrainMotorDownLeft);
     driveTrainDownRight = new WPI_VictorSPX(RobotMap.CAN.driveTrainMotorDownRight);
     driveTrainUpLeft = new WPI_TalonSRX(RobotMap.CAN.driveTrainMotorUpLeft);

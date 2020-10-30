@@ -7,12 +7,12 @@ public class Rail extends SubsystemBase {
 
     private WPI_TalonSRX railMotor;
     private final double motorSpeed = 0.3;
-    private static int currrentCapacity;
+    private int currentCapacity;
     public static final int MAX_CAPACITY = 3;
 
     public Rail(WPI_TalonSRX railMotor) {
         this.railMotor = railMotor;
-        this.currrentCapacity = 0;
+        this.currentCapacity = 0;
     }
 
     public void move() {
@@ -23,7 +23,15 @@ public class Rail extends SubsystemBase {
         railMotor.stopMotor();
     }
 
-    public static int getCurrentCapacity() {
-        return currrentCapacity;
+    public int getCurrentCapacity() {
+        return currentCapacity;
+    }
+
+    public void incrementCurrentCapacity(){
+        currentCapacity++;
+    }
+
+    public void decrementCurrentCapacity(){
+        currentCapacity--;
     }
 }

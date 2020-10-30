@@ -9,6 +9,7 @@ public class RobotMap {
         int DRIVE_TRAIN_MOTOR_UP_RIGHT = 2;
         int DRIVE_TRAIN_MOTOR_DOWN_RIGHT = 3;
         int SHOOTER_MOTOR = 4;
+        int RAIL_MOTOR = 5;
 
     }
 

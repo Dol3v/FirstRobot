@@ -19,6 +19,7 @@ import frc.robot.commands.MoveTrain;
 import frc.robot.commands.UnGrip;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Gripper;
+import frc.robot.subsystems.Rail;
 import frc.robot.subsystems.Shooter;
 
 /**
@@ -60,6 +61,7 @@ public class Robot extends TimedRobot {
 
         train = new DriveTrain(driveTrainUpLeft, driveTrainDownLeft, driveTrainUpRight, driveTrainDownRight);
 
+        Rail rail = new Rail(new WPI_TalonSRX(RobotMap.CAN.RAIL_MOTOR));
         gripMotor = new VictorSP(RobotMap.PWM.GRIP_MOTOR);
         gripLimit = new DigitalInput(RobotMap.DIO.GRIP_LIMIT);
         gripper = new Gripper(gripMotor, gripLimit);
@@ -72,7 +74,7 @@ public class Robot extends TimedRobot {
         limitShooter = new DigitalInput(RobotMap.DIO.SHOOTER_LIMIT);
         shooter = new Shooter(motorShooter, limitShooter, encoderShooter);
 
-        OI oi = new OI(gripper);
+        OI oi = new OI(gripper, rail, shooter);
         moveCmd = new MoveTrain(train, () -> oi.getLeftY(), () -> oi.getRightY());
 
         train.setDefaultCommand(moveCmd);

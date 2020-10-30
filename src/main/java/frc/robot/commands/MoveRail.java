@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Rail;
 
 public class MoveRail extends CommandBase {
+    //move rail command
 
     private Rail rail;
     private double time;

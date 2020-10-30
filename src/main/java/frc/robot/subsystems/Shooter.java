@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
+    //shooter subsystem
 
     private WPI_TalonSRX motor;
     private DigitalInput limit;

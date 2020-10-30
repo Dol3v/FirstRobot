@@ -6,6 +6,7 @@ import frc.robot.subsystems.Gripper;
 
 
 public class UnGrip extends CommandBase {
+    //ungrip command
     private Gripper gripper;
 
 

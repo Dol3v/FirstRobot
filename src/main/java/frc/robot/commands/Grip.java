@@ -5,6 +5,7 @@ import frc.robot.subsystems.Gripper;
 
 
 public class Grip extends CommandBase {
+    //grip command
 
     private Gripper gripper;
 

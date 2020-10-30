@@ -7,6 +7,7 @@ import frc.robot.subsystems.Shooter;
 import java.util.function.Supplier;
 
 public class ShootPID extends CommandBase {
+    //shoot with PID
 
     private Shooter shooter;
     private PIDController pidController;

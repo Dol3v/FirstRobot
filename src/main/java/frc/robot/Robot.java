@@ -52,6 +52,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    //initializing robot
     driveTrainDownLeft = new WPI_VictorSPX(RobotMap.CAN.driveTrainMotorDownLeft);
     driveTrainDownRight = new WPI_VictorSPX(RobotMap.CAN.driveTrainMotorDownRight);
     driveTrainUpLeft = new WPI_TalonSRX(RobotMap.CAN.driveTrainMotorUpLeft);
